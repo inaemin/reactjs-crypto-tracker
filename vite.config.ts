@@ -1,8 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/reactjs-crypto-tracker/'
-})
+  plugins: [react(), eslint()],
+  base: '/reactjs-crypto-tracker/',
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+  },
+});
