@@ -1,8 +1,10 @@
 import { useQuery } from 'react-query';
 import { useOutletContext } from 'react-router-dom';
 import ApexChart from 'react-apexcharts';
+import { useRecoilValue } from 'recoil';
 import { fetchCoinHistory } from '../api';
 import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
+import isDarkAtom from '../atoms';
 
 interface IHistorial {
   time_open: number;
@@ -24,6 +26,7 @@ export default function Chart() {
   const { isLoading, data } = useQuery<IHistorial[]>(['ohlcv', coinId], () =>
     fetchCoinHistory(coinId),
   );
+  const isDark = useRecoilValue(isDarkAtom);
 
   return !isLoading ? (
     <div>
@@ -42,7 +45,7 @@ export default function Chart() {
           },
         ]}
         options={{
-          theme: { mode: 'dark' },
+          theme: { mode: isDark ? 'dark' : 'light' },
           chart: {
             type: 'candlestick',
             width: 500,
@@ -81,7 +84,7 @@ export default function Chart() {
           },
         ]}
         options={{
-          theme: { mode: 'dark' },
+          theme: { mode: isDark ? 'dark' : 'light' },
           chart: {
             height: 500,
             width: 500,
@@ -108,7 +111,8 @@ export default function Chart() {
           colors: ['#4cd137'],
           tooltip: {
             y: {
-              formatter: (value) => `$${commaEveryThreeDigit(Math.floor(value))}`,
+              formatter: (value) =>
+                `$${commaEveryThreeDigit(Math.floor(value))}`,
             },
           },
           title: { text: 'Smooth Line Chart', align: 'left' },

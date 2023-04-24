@@ -3,10 +3,12 @@ import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoins } from '../api';
+import FixedButton from '../component/FixedButton';
 
 const Container = styled.main`
   max-width: 480px;
   margin: 0 auto;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.h1`
@@ -83,6 +85,7 @@ export default function Coins() {
             ))
           : 'Loading...'}
       </CoinsList>
+      <FixedButton />
     </Container>
   );
 }

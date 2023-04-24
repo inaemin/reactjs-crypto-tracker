@@ -10,6 +10,7 @@ import {
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
 import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
+import FixedButton from '../component/FixedButton';
 
 const Container = styled.main`
   max-width: 480px;
@@ -41,7 +42,7 @@ const OverviewItem = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  background-color: black;
+  background-color: ${(props) => props.theme.ovBgColor};
   padding: 10px;
   > div {
     display: flex;
@@ -67,44 +68,10 @@ const TabWrapper = styled.div`
 const Tab = styled.span<{ isActive: boolean }>`
   a {
     padding: 10px 90px;
-    background-color: black;
+    background-color: ${(props) => props.theme.ovBgColor};
     border-radius: 10px;
     color: ${(props) => (props.isActive ? props.theme.accentColor : 'inherit')};
   }
-`;
-
-const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Button = styled.button`
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  margin-top: 10px;
-  font-size: 30px;
-  :hover {
-    color: ${(props) => props.theme.accentColor};
-    transition: 0.2s ease-in-out;
-    cursor: pointer;
-  }
-`;
-
-const ButtonLink = styled(Link)`
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  margin-top: 10px;
-  font-size: 27px;
-  background-color: white;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 interface InfoProps {
@@ -227,14 +194,7 @@ export default function Coin() {
         </Tab>
       </TabWrapper>
       <Outlet context={{ coinId }} />
-      <ButtonContainer>
-        <Button onClick={() => console.log('다크모드!')}>
-          <i className="fa-solid fa-moon" />
-        </Button>
-        <ButtonLink to="/reactjs-crypto-tracker/">
-          <i className="fa-solid fa-house" />
-        </ButtonLink>
-      </ButtonContainer>
+      <FixedButton />
     </Container>
   );
 }
