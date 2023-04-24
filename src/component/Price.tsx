@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useOutletContext } from 'react-router-dom';
 import { fetchCoinTickers } from '../api';
+import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
 
 const TickerTable = styled.table`
   margin: 0 auto;
@@ -11,7 +12,7 @@ const TickerTable = styled.table`
     background-color: rgba(113, 128, 147, 0.1);
   }
   td {
-    padding: 10px 25px;
+    padding: 10px 20px;
     white-space: nowrap;
     text-align: center;
     :last-child {
@@ -73,11 +74,11 @@ export default function Price() {
         <tbody>
           <tr>
             <td>24h 총 거래량</td>
-            <td>{data?.quotes.USD.volume_24h}</td>
+            <td>{commaEveryThreeDigit(data?.quotes.USD.volume_24h || 0)}</td>
           </tr>
           <tr>
             <td>시가총액</td>
-            <td>{data?.quotes.USD.market_cap}</td>
+            <td>{commaEveryThreeDigit(data?.quotes.USD.market_cap || 0)}</td>
           </tr>
           <tr>
             <td>가격변화(15분)</td>
@@ -109,7 +110,7 @@ export default function Price() {
           </tr>
           <tr>
             <td>최고가격</td>
-            <td>{data?.quotes.USD.ath_price}</td>
+            <td>{commaEveryThreeDigit(data?.quotes.USD.ath_price || 0)}</td>
           </tr>
           <tr>
             <td>최고가격 대비 현재가격</td>

@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { useOutletContext } from 'react-router-dom';
 import ApexChart from 'react-apexcharts';
 import { fetchCoinHistory } from '../api';
-import formatNum from '../utils/formatNum';
+import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
 
 interface IHistorial {
   time_open: number;
@@ -108,7 +108,7 @@ export default function Chart() {
           colors: ['#4cd137'],
           tooltip: {
             y: {
-              formatter: (value) => `$${formatNum(Math.floor(value))}`,
+              formatter: (value) => `$${commaEveryThreeDigit(Math.floor(value))}`,
             },
           },
           title: { text: 'Smooth Line Chart', align: 'left' },

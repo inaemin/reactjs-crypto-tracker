@@ -9,11 +9,12 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
-import formatNum from '../utils/formatNum';
+import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
 
 const Container = styled.main`
   max-width: 480px;
   margin: 0 auto;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.h1`
@@ -195,18 +196,22 @@ export default function Coin() {
             </div>
             <div>
               <span>PRICE</span>
-              <span>${tickersData?.quotes.USD.price.toFixed(5)}</span>
+              <span>
+                {commaEveryThreeDigit(tickersData?.quotes.USD.price || 0)}
+              </span>
             </div>
           </OverviewItem>
           <p>{infoData?.description}</p>
           <OverviewItem>
             <div>
               <span>MAX SUPPLY</span>
-              <span>{formatNum(tickersData?.max_supply)}</span>
+              <span>{commaEveryThreeDigit(tickersData?.max_supply || 0)}</span>
             </div>
             <div>
               <span>CIRCULATING SUPPLY</span>
-              <span>{formatNum(tickersData?.circulating_supply)}</span>
+              <span>
+                {commaEveryThreeDigit(tickersData?.circulating_supply || 0)}
+              </span>
             </div>
           </OverviewItem>
         </Overview>
