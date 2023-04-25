@@ -6,7 +6,7 @@ import { fetchCoinHistory } from '../api';
 import commaEveryThreeDigit from '../utils/commaEveryThreeDigit';
 import isDarkAtom from '../atoms';
 
-interface IHistorial {
+interface IHistory {
   time_open: number;
   time_close: number;
   open: string;
@@ -23,12 +23,17 @@ interface OutletContext {
 
 export default function Chart() {
   const { coinId } = useOutletContext<OutletContext>();
-  const { isLoading, data } = useQuery<IHistorial[]>(['ohlcv', coinId], () =>
-    fetchCoinHistory(coinId),
+  const { isLoading, data, isError } = useQuery<IHistory[]>(
+    ['ohlcv', coinId],
+    () => fetchCoinHistory(coinId),
   );
   const isDark = useRecoilValue(isDarkAtom);
 
-  return !isLoading ? (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : isError ? (
+    <div>Sorry! No price information</div>
+  ) : (
     <div>
       <ApexChart
         type="candlestick"
@@ -119,7 +124,5 @@ export default function Chart() {
         }}
       />
     </div>
-  ) : (
-    <div>Loading...</div>
   );
 }
